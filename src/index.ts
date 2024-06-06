@@ -7,28 +7,28 @@ export const isRequired =
     validation.isRequired(errorMessage);
 
 export const minLength =
-  (min: number, errorMessage?: string): ValidationFunction<string> =>
-  (validation: Validation<string>) =>
+  <T>(min: number, errorMessage?: string): ValidationFunction<T> =>
+  (validation: Validation<T>) =>
     validation.minLength(min, errorMessage);
 
 export const maxLength =
-  (max: number, errorMessage?: string): ValidationFunction<string> =>
-  (validation: Validation<string>) =>
+  <T>(max: number, errorMessage?: string): ValidationFunction<T> =>
+  (validation: Validation<T>) =>
     validation.maxLength(max, errorMessage);
 
 export const isEmailOnly =
-  (errorMessage?: string): ValidationFunction<string> =>
-  (validation: Validation<string>) =>
+  <T>(errorMessage?: string): ValidationFunction<T> =>
+  (validation: Validation<T>) =>
     validation.emailOnly(errorMessage);
 
 export const rangeNumeric =
-  (min: number, max: number, errorMessage?: string): ValidationFunction<string> =>
-  (validation: Validation<string>) =>
+  <T>(min: number, max: number, errorMessage?: string): ValidationFunction<T> =>
+  (validation: Validation<T>) =>
     validation.rangeNumeric(min, max, errorMessage);
 
 export const enumValue =
-  (enums: string[], errorMessage?: string): ValidationFunction<string> =>
-  (validation: Validation<string>) =>
+  <T>(enums: string[], errorMessage?: string): ValidationFunction<T> =>
+  (validation: Validation<T>) =>
     validation.enum(enums, errorMessage);
 
 const validateObject = <T>(data: T, credentials: { [K in keyof T]: ValidationFunction<any>[] }) => {
