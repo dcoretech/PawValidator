@@ -29,28 +29,28 @@ Then, import the necessary functions and start validating your data effortlessly
 ## Usage Example
 
 ```typescript
-import { createValidator, validateObject, isRequired, minLenght } from "paw-validator";
+import { createValidator, isRequired, minLenght } from "paw-validator";
 
 // Define interface (optionals)
 interface UserDto {
   username: string;
   password: string;
+  email: string;
 }
 
 // Define object value
 const data: UserDto = {
   username: "exampleusername",
   password: "secret-123",
+  email: "myemail@email.com",
 };
 
 // Create validation rules for each property of the object
-const credentials = createValidator<UserDto>({
+const { validate, errors } = createValidator<UserDto>(data, {
   username: [isRequired(), minLength(4), maxLength(10)],
   password: [isRequired(), minLength(4), maxLength(10)],
+  email: [isRequired(), emailOnly(), maxLength(30)],
 });
-
-// Create Error Handling to implements the credentials to object value
-const { validate, errors } = validateObject(data, credentials);
 
 console.log(validate); // true if valid, false otherwise
 console.log(errors); // error messages if any
@@ -58,26 +58,14 @@ console.log(errors); // error messages if any
 
 ## API Documentation
 
-### createValidator(cred)
+### `createValidator(data, credentials)`
 
 The `createValidator` function is a utility designed to facilitate the creation of validation rules for objects based on a specified data structure.
 
 **Parameters**
 
-- `credentials`: An object specifying validation rules for each property of the object to be validated. It uses TypeScript's mapped types to ensure that each property of T is associated with an array of validation functions.
-
-**Returns**
-
-- An object representing the validation rules for each property of the object.
-
-### validateObject(data, credentials)
-
-The `validateObject` function is a utility designed to validate an object against a set of predefined validation rules. It takes in the object to be validated and a set of validation rules, then iterates through each property of the object, applying the corresponding validation functions.
-
-**Parameters**
-
 - `data`: The object to be validated. Its structure must match the type T.
-- `credials`: An object specifying validation rules for each property of the data object. It is defined using TypeScript's mapped types to ensure that each property of data is associated with an array of validation functions.
+- `credentials`: An object specifying validation rules for each property of the object to be validated. It uses TypeScript's mapped types to ensure that each property of T is associated with an array of validation functions.
 
 **Returns**
 

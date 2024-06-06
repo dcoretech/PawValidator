@@ -31,9 +31,7 @@ export const enumValue =
   (validation: Validation<string>) =>
     validation.enum(enums, errorMessage);
 
-export const createValidator = <T>(credentials: { [K in keyof T]: ValidationFunction<T[K]>[] }) => credentials;
-
-export const validateObject = <T>(data: T, credentials: { [K in keyof T]: ValidationFunction<any>[] }) => {
+const validateObject = <T>(data: T, credentials: { [K in keyof T]: ValidationFunction<any>[] }) => {
   const validationResults: { [K in keyof T]?: Validation<T[K]> } = {};
 
   for (const [key, validations] of Object.entries(credentials) as [keyof T, ValidationFunction<T[keyof T]>[]][]) {
@@ -60,3 +58,5 @@ export const validateObject = <T>(data: T, credentials: { [K in keyof T]: Valida
     errors: errors,
   };
 };
+
+export const createValidator = <T>(data: T, credentials: { [K in keyof T]: ValidationFunction<T[K]>[] }) => validateObject(data, credentials);
