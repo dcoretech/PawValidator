@@ -1,10 +1,10 @@
 export class Validation<T> {
-  field: T | null | undefined;
+  field: string | null | undefined;
   errorMessage: string[];
   required: boolean;
 
   constructor(field: T | null | undefined) {
-    this.field = field;
+    this.field = String(field);
     this.required = false;
     this.errorMessage = [];
   }
